@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Formik } from 'formik';
+import React from 'react';
+import { Formik, Form } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
+import MaterialUIText from '../formcontrollers/MaterialUIText';
+import { Button } from '@material-ui/core'
 
 const LoginForm: React.FC = () => {
 
@@ -22,9 +24,9 @@ const LoginForm: React.FC = () => {
       .required("Required")
   })
 
-  const handleSubmit = () => {
-    
-  }
+  const handleSubmit = (values: User): void => {
+    alert(values.username);
+  };
 
   return (
     <Formik 
@@ -32,7 +34,23 @@ const LoginForm: React.FC = () => {
       onSubmit={handleSubmit}
       validationSchema={loginSchema}
     >
-
+      {() => {
+          return (
+            <Form>
+              <MaterialUIText name="username" label="Username" required={true} />
+              <MaterialUIText name="password" label="Password" required={true} />
+              <br />
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+              >
+                Log in
+              </Button>
+            </Form>
+          )
+        }
+      }
     </Formik>
   )
 }
