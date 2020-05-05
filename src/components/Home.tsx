@@ -1,10 +1,11 @@
 import React from 'react';
+import ScraperDetails from './scraper/ScraperDetails';
 
 const Home: React.FC = () => {
 	return (
-		<div>
-			<h1>Hello World</h1>
-		</div>
+		<React.Fragment>
+			<ScraperDetails />
+		</React.Fragment>
 	)
 }
 

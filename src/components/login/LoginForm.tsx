@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import MaterialUIText from '../formcontrollers/MaterialUIText';
-import { Button } from '@material-ui/core'
+import { Button } from '@material-ui/core';
 
 const LoginForm: React.FC = () => {
 
