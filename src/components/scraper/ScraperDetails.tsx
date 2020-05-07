@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, TextField, Grid, Typography } from '@material-ui/core';
 import axios, { AxiosResponse } from 'axios';
 import Image from 'material-ui-image';
+import { Store } from '../contexts/UserContext'
 
 const ScraperDetails: React.FC = () => {
+	const { state } = useContext(Store)
+
 	const [searchUrl, setSearchUrl] = useState("")
 	const [productUrl, setProductUrl] = useState("")
 	const [productTitle, setProductTitle] = useState("")
@@ -21,9 +24,10 @@ const ScraperDetails: React.FC = () => {
 	}
 
 	const saveInformation = async () => {
-		await axios.post('http://localhost:8080/scrape/saveproduct', 
+		let response = await axios.post('http://localhost:8080/auth/saveproduct', 
 		{productUrl: productUrl, productTitle: productTitle,
-			productImage: imageSource, productValue: productValue})
+		productImage: imageSource, productValue: productValue})
+		console.log(response)
 	}
 
 	return (
@@ -46,7 +50,13 @@ const ScraperDetails: React.FC = () => {
 					<Typography variant="h5">{productValue}</Typography>
 				</Grid>
 				<Grid item xs={12}>
-					<Button onClick={async () => await saveInformation()}>Save Product</Button>
+					<Button 
+						onClick={() => saveInformation()}
+						variant="contained"
+						color="primary"
+					>
+					Save Product
+					</Button>
 				</Grid>
 			</Grid>
 		</Grid>

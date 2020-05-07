@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form } from 'formik';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import * as Yup from 'yup';
 import MaterialUIText from '../formcontrollers/MaterialUIText';
 import { Button } from '@material-ui/core';
+import { Store } from '../contexts/UserContext';
 
 const LoginForm: React.FC = () => {
+  const {state, dispatch} = useContext(Store);
 
   interface User {
     username: string,
@@ -24,9 +26,27 @@ const LoginForm: React.FC = () => {
       .required("Required")
   })
 
-  const handleSubmit = (values: User): void => {
-    alert(values.username);
+  const fetchLoginAction = (apiResponse: AxiosResponse<any>) => {
+    return dispatch({
+      type: 'LOG_IN',
+      payload: apiResponse
+    })
+  }
+
+  const handleLogout = () => {
+    return dispatch({
+      type: 'LOG_OUT'
+    })
+  }
+
+  const handleSubmit = async (values: User) => {
+    let { username, password } = values;
+    console.log(values)
+    let response = await axios.post('http://localhost:8080/auth/login', { username, password })
+    fetchLoginAction(response.data)
+    console.log(response)
   };
+  console.log(state)
 
   return (
     <Formik 
@@ -38,7 +58,7 @@ const LoginForm: React.FC = () => {
           return (
             <Form>
               <MaterialUIText name="username" label="Username" required={true} />
-              <MaterialUIText name="password" label="Password" required={true} />
+              <MaterialUIText name="password" label="Password" required={true} type="password" />
               <br />
               <Button
                 variant="contained"
@@ -46,6 +66,12 @@ const LoginForm: React.FC = () => {
                 type="submit"
               >
                 Log in
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleLogout()}
+              >
+                Log out
               </Button>
             </Form>
           )
