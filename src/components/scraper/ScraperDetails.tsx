@@ -26,7 +26,7 @@ const ScraperDetails: React.FC = () => {
 	const saveInformation = async () => {
 		let response = await axios.post('http://localhost:8080/auth/saveproduct', 
 		{productUrl: productUrl, productTitle: productTitle,
-		productImage: imageSource, productValue: productValue})
+		productImage: imageSource, productValue: productValue, token: state.token})
 		console.log(response)
 	}
 
