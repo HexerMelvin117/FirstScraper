@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik, Form } from 'formik';
 import axios, { AxiosResponse } from 'axios';
 import * as Yup from 'yup';
@@ -8,6 +8,7 @@ import { Store } from '../contexts/UserContext';
 
 const LoginForm: React.FC = () => {
   const {state, dispatch} = useContext(Store);
+  const [buttonDisable, setButtonDisable] = useState(false)
 
   interface User {
     username: string,
@@ -33,18 +34,12 @@ const LoginForm: React.FC = () => {
     })
   }
 
-  const handleLogout = () => {
-    return dispatch({
-      type: 'LOG_OUT'
-    })
-  }
-
   const handleSubmit = async (values: User) => {
     let { username, password } = values;
-    console.log(values)
+    setButtonDisable(true)
     let response = await axios.post('http://localhost:8080/auth/login', { username, password })
+    setButtonDisable(false)
     fetchLoginAction(response.data)
-    console.log(response)
   };
   console.log(state)
 
@@ -57,21 +52,17 @@ const LoginForm: React.FC = () => {
       {() => {
           return (
             <Form>
-              <MaterialUIText name="username" label="Username" required={true} />
-              <MaterialUIText name="password" label="Password" required={true} type="password" />
+              <MaterialUIText name="username" label="Username" required={true} variant="outlined" />
+              <br />
+              <MaterialUIText name="password" label="Password" required={true} type="password" variant="outlined" />
               <br />
               <Button
                 variant="contained"
                 color="primary"
                 type="submit"
+                disabled={buttonDisable}
               >
                 Log in
-              </Button>
-              <Button
-                variant="contained"
-                onClick={() => handleLogout()}
-              >
-                Log out
               </Button>
             </Form>
           )

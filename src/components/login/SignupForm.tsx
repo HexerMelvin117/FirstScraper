@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import MaterialUIText from '../formcontrollers/MaterialUIText';
 import * as Yup from 'yup';
 import { Button } from '@material-ui/core';
+import axios from 'axios';
 
 const SignupForm: React.FC = () => {
 	interface UserInfo {
@@ -12,7 +13,7 @@ const SignupForm: React.FC = () => {
 		confirmPassword: string
 	}
 
-	const userInfo: UserInfo = {
+	const initialValues: UserInfo = {
 		email: "",
 		name: "",
 		password: "",
@@ -30,23 +31,25 @@ const SignupForm: React.FC = () => {
 			.required("Required")
 	})
 
-	const handleSubmit = (values: UserInfo): void => {
-		alert(values)
+	const handleSubmit = async (values: UserInfo) => {
+		await axios.post('http://localhost:8080/auth/signup', {email: values.email, name: values.name, 
+		password: values.password, confirmPassword: values.confirmPassword})
 	}
 
 
 	return (
 		<Formik
-			initialValues={userInfo}
+			initialValues={initialValues}
 			onSubmit={handleSubmit}
 			validationSchema={signupSchema}
 		>
 			{() => (
 				<Form>
-					<MaterialUIText name="username" label="Username" required={true} />
-          <MaterialUIText name="email" label="Email" required={true} />
-					<MaterialUIText name="password" label="Password" required={true} />
-          <MaterialUIText name="confirmPassword" label="Confirm Password" required={true} />
+					<MaterialUIText name="email" label="Email" required={true} />
+					<MaterialUIText name="name" label="Name" required={true} />
+					<MaterialUIText name="password" label="Password" required={true} type="password" />
+          <MaterialUIText name="confirmPassword" label="Confirm Password" required={true} type="password" />
+					<br />
 					<Button
 						variant="contained"
 						color="primary"
