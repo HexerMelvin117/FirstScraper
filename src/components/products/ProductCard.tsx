@@ -28,23 +28,23 @@ const ProductCard: React.FC<FieldComponents> = ({ productTitle, value, imgSrc, u
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} raised={true}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
           image={imgSrc}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="subtitle1" component="h2">
             {productTitle}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {value}
+            ${value}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" href={url}>
           View in Amazon
         </Button>
         <Button size="small" color="primary">

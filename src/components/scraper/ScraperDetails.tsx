@@ -12,8 +12,10 @@ const ScraperDetails: React.FC = () => {
 	const [productTitle, setProductTitle] = useState("")
 	const [imageSource, setImageSource] = useState("")
 	const [productValue, setProductValue] = useState("")
+	const [buttonDisable, setButtonDisable] = useState(false)
 
 	const handleSearch = async () => {
+		setButtonDisable(true)
 		const response: AxiosResponse<any> = await axios.post('http://localhost:8080/scrape/amazonproduct', {productLink: searchUrl})
 		const result = response.data;
 		let {productUrl, titleText, imageSourceTxt, priceValue} = result
@@ -21,6 +23,7 @@ const ScraperDetails: React.FC = () => {
 		setProductTitle(titleText)
 		setImageSource(imageSourceTxt)
 		setProductValue(priceValue)
+		setButtonDisable(false)
 	}
 
 	const saveInformation = async () => {
@@ -34,14 +37,14 @@ const ScraperDetails: React.FC = () => {
 		<Grid container>
 			<Grid item xs={12}>
 				<TextField name="url" label="Url" type="text" onChange={(e) => setSearchUrl(e.target.value)} />
-				<Button variant="contained" color="primary" onClick={() => handleSearch()}>Scrape</Button>
+				<Button variant="contained" disabled={buttonDisable} color="primary" onClick={() => handleSearch()}>Scrape</Button>
 			</Grid>
 			<Grid item xs={12}>
 				<Grid item xs={12} md={6}>
 					<Typography variant="h5">{productUrl}</Typography>
 				</Grid>
 				<Grid item xs={12} md={6}>
-					<Typography variant="h5">{productTitle}</Typography>
+					<Typography variant="h6">{productTitle}</Typography>
 				</Grid>
 				<Grid item xs={12} md={6}>
 					{imageSource ? <Image src={imageSource}></Image> : null}
@@ -50,13 +53,15 @@ const ScraperDetails: React.FC = () => {
 					<Typography variant="h5">{productValue}</Typography>
 				</Grid>
 				<Grid item xs={12}>
+					{state.isAuthenticated && productTitle ? 
 					<Button 
 						onClick={() => saveInformation()}
 						variant="contained"
 						color="primary"
 					>
 					Save Product
-					</Button>
+					</Button> : null}
+					
 				</Grid>
 			</Grid>
 		</Grid>

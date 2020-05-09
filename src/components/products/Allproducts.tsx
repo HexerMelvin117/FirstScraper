@@ -9,6 +9,7 @@ const Allproducts: React.FC = () => {
 	const [allProducts, setAllProducts] = useState([])
 
 	interface Product {
+		prod_id: number,
 		prod_title: string,
 		prod_value: string,
 		prod_img: string,
@@ -31,8 +32,8 @@ const Allproducts: React.FC = () => {
 		<React.Fragment>
 			<Grid container>
 			{ allProducts.map((product: Product) => (
-				<Grid item xs={12} md={4}>
-					<ProductCard 
+				<Grid item xs={12} md={4} key={product.prod_id}>
+					<ProductCard
 						productTitle={product.prod_title} 
 						value={product.prod_value} 
 						imgSrc={product.prod_img} 

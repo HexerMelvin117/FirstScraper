@@ -6,10 +6,11 @@ interface FieldComponents {
 	name: string,
 	label: string,
 	required?: boolean,
-	type?: string
+	type?: string,
+	variant?: string 
 }
 
-const MaterialUIText: React.FC<FieldComponents> = ({ name, label, required = "false", type = "text" }) => {
+const MaterialUIText: React.FC<FieldComponents> = ({ name, label, required = "false", type = "text", variant }) => {
 	return (
 		<div>
 			<Field
@@ -18,6 +19,7 @@ const MaterialUIText: React.FC<FieldComponents> = ({ name, label, required = "fa
 				label={label}
 				required={required}
 				type={type}
+				variant={variant}
 			/>
 		</div>
 	)
