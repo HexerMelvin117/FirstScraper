@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import MaterialUIText from '../formcontrollers/MaterialUIText';
 import { Button } from '@material-ui/core';
 import { Store } from '../contexts/UserContext';
+import { useHistory } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const {state, dispatch} = useContext(Store);
@@ -34,12 +35,15 @@ const LoginForm: React.FC = () => {
     })
   }
 
+  let history = useHistory()
+
   const handleSubmit = async (values: User) => {
     let { username, password } = values;
     setButtonDisable(true)
     let response = await axios.post('http://localhost:8080/auth/login', { username, password })
     setButtonDisable(false)
     fetchLoginAction(response.data)
+    history.push('/')
   };
   console.log(state)
 

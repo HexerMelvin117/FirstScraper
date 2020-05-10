@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Store } from '../contexts/UserContext';
+import { ProductStore } from '../contexts/ProductsContext';
 import ProductCard from './ProductCard';
 import { Grid } from '@material-ui/core';
 
 const Allproducts: React.FC = () => {
-	const {state} = useContext(Store)
-	const [allProducts, setAllProducts] = useState([])
+	const { state } = useContext(Store);
+
+	// This is the product context
+	const prodCon = useContext(ProductStore);
 
 	interface Product {
 		prod_id: number,
@@ -23,21 +26,24 @@ const Allproducts: React.FC = () => {
 				return response.data
 			}
 			const myProducts = await fetchSavedProducts();
-			setAllProducts(myProducts)
-			console.log(allProducts);
+			prodCon.dispatch({
+				type: 'FILL_PRODUCTS',
+				payload: myProducts
+			})
 		})()
-	}, [])
+	}, []);
 
 	return(
 		<React.Fragment>
 			<Grid container>
-			{ allProducts.map((product: Product) => (
+			{ prodCon.state.data.map((product: Product) => (
 				<Grid item xs={12} md={4} key={product.prod_id}>
 					<ProductCard
 						productTitle={product.prod_title} 
 						value={product.prod_value} 
 						imgSrc={product.prod_img} 
-						url={product.prod_url} 
+						url={product.prod_url}
+						prodId={product.prod_id} 
 					/>
 				</Grid>
 			)) }
