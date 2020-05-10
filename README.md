@@ -1,5 +1,7 @@
 # FirstScraper
 
+Description: This is a very simple app used for scrapping the Amazon website for products and save the product information within a database with the help of a REST API.
+
 ### Takeaways
 
 1) Learned how to apply some of the typescript basics to a React application.
