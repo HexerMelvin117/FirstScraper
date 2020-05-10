@@ -4,14 +4,15 @@ import AllProducts from './products/Allproducts';
 import ScraperDetails from './scraper/ScraperDetails';
 import { Typography, Button } from '@material-ui/core';
 import { ProductStore } from './contexts/ProductsContext';
-import axios from 'axios'
+import axios from 'axios';
+require('dotenv').config()
 
 const Home: React.FC = () => {
 	const { state } = useContext(Store)
 	const prodCon = useContext(ProductStore);
 
 	const fetchSavedProducts = async () => {
-		let response = await axios.post('http://localhost:8080/auth/allproducts', { token: state.token });
+		let response = await axios.post(`https://firstscraper-rest.herokuapp.com/auth/allproducts`, { token: state.token });
 		console.log(response);
 		return response.data;
 	}

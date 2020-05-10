@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import axios from 'axios';
+require('dotenv').config()
 
 const SignupForm: React.FC = () => {
 	interface UserInfo {
@@ -35,7 +36,7 @@ const SignupForm: React.FC = () => {
 	let history = useHistory();
 
 	const handleSubmit = async (values: UserInfo) => {
-		await axios.post('http://localhost:8080/auth/signup', {email: values.email, name: values.name, 
+		await axios.post(`https://firstscraper-rest.herokuapp.com/auth/signup`, {email: values.email, name: values.name, 
 		password: values.password, confirmPassword: values.confirmPassword});
 		history.push('/login');
 	}

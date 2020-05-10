@@ -4,6 +4,7 @@ import { Store } from '../contexts/UserContext';
 import { ProductStore } from '../contexts/ProductsContext';
 import ProductCard from './ProductCard';
 import { Grid } from '@material-ui/core';
+require('dotenv').config()
 
 const Allproducts: React.FC = () => {
 	const { state } = useContext(Store);
@@ -22,7 +23,7 @@ const Allproducts: React.FC = () => {
 	useEffect(() => {
 		(async () => {
 			async function fetchSavedProducts () {
-				let response = await axios.post('http://localhost:8080/auth/allproducts', { token: state.token })
+				let response = await axios.post(`https://firstscraper-rest.herokuapp.com/auth/allproducts`, { token: state.token })
 				return response.data
 			}
 			const myProducts = await fetchSavedProducts();
