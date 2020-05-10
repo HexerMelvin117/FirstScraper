@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import MaterialUIText from '../formcontrollers/MaterialUIText';
 import * as Yup from 'yup';
 import { Button } from '@material-ui/core';
+import { useHistory } from 'react-router-dom'
 import axios from 'axios';
 
 const SignupForm: React.FC = () => {
@@ -31,9 +32,12 @@ const SignupForm: React.FC = () => {
 			.required("Required")
 	})
 
+	let history = useHistory();
+
 	const handleSubmit = async (values: UserInfo) => {
 		await axios.post('http://localhost:8080/auth/signup', {email: values.email, name: values.name, 
-		password: values.password, confirmPassword: values.confirmPassword})
+		password: values.password, confirmPassword: values.confirmPassword});
+		history.push('/login');
 	}
 
 

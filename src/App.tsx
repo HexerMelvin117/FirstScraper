@@ -1,10 +1,10 @@
 import React from 'react';
 import Home from './components/Home';
-import LoginForm from './components/login/LoginForm';
-import SignupForm from './components/login/SignupForm';
+import Login from './components/login/Login';
+import Signup from './components/login/Signup';
 import Webnavbar from './components/layout/Webnavbar';
-import './App.css';
 import UserProvider from './components/contexts/UserContext';
+import ProductProvider from './components/contexts/ProductsContext';
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,20 +15,22 @@ const App: React.FC = () =>  {
   return (
     <div className="App">
       <UserProvider>
-        <Router>
-          <Webnavbar />
-          <Switch>
-            <Route path="/login">
-              <LoginForm />
-            </Route>
-            <Route path="/register">
-              <SignupForm />
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
-        </Router>
+        <ProductProvider>
+          <Router>
+            <Webnavbar />
+            <Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Signup />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </Router>
+        </ProductProvider>
       </UserProvider>
     </div>
   );
