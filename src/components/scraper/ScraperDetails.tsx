@@ -20,7 +20,7 @@ const ScraperDetails: React.FC = () => {
 	// Actions Zone
 	const handleSearch = async () => {
 		setButtonDisable(true)
-		const response: AxiosResponse<any> = await axios.post('http://localhost:8080/scrape/amazonproduct', {productLink: searchUrl})
+		const response: AxiosResponse<any> = await axios.post(`https://firstscraper-rest.herokuapp.com/scrape/amazonproduct`, {productLink: searchUrl})
 		const result = response.data;
 		let {productUrl, titleText, imageSourceTxt, priceValue} = result
 		setProductUrl(productUrl)
@@ -31,7 +31,7 @@ const ScraperDetails: React.FC = () => {
 	}
 
 	const saveInformation = async () => {
-		let response = await axios.post('http://localhost:8080/auth/saveproduct', 
+		let response = await axios.post('https://firstscraper-rest.herokuapp.com/auth/saveproduct', 
 		{productUrl: productUrl, productTitle: productTitle,
 		productImage: imageSource, productValue: productValue, token: state.token});
 	}

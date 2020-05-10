@@ -40,7 +40,7 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (values: User) => {
     let { username, password } = values;
     setButtonDisable(true)
-    let response = await axios.post('http://localhost:8080/auth/login', { username, password })
+    let response = await axios.post(`https://firstscraper-rest.herokuapp.com/auth/login`, { username, password })
     setButtonDisable(false)
     fetchLoginAction(response.data)
     history.push('/')

@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { ProductStore } from '../contexts/ProductsContext';
 import { Store } from '../contexts/UserContext'
 import axios from 'axios';
+require('dotenv').config()
 
 const useStyles = makeStyles({
   root: {
@@ -34,7 +35,7 @@ const ProductCard: React.FC<FieldComponents> = ({ productTitle, value, imgSrc, u
   const classes = useStyles();
 
   const removeFromDatabase = async () => {
-    let response = await axios.post('http://localhost:8080/auth/removeproduct', 
+    let response = await axios.post(`https://firstscraper-rest.herokuapp.com/auth/removeproduct`, 
     {productId: prodId, token: userCon.state.token})
     console.log(response)
   }
